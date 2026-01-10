@@ -48,8 +48,10 @@ services (e.g., fraud detection, notification services, ledger updates).
 - Bonus Challenges (Optional)
     - How would you handle a partial failure where money is debited but not
       credited? [SAGA PATTERN]
-    - How would you scale this globally (multi-region deployments)? [KAFKA TOPIC PARTITIONING,SHARDING]
-    - How would you introduce rate limiting to prevent abuse? [IN PROGRESS]
+  - How would you scale this globally (multi-region deployments)? [IN PROGRESS]
+  - How would you introduce rate limiting to prevent abuse? [rolling window in redis, based on client identification]
+
+[Scaling: kafka topic partitioning,db sharding]
 
 [Miro board](https://miro.com/app/board/uXjVGahmmy0=/?share_link_id=875391363523)
 
