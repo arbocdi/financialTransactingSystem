@@ -10,43 +10,47 @@ services (e.g., fraud detection, notification services, ledger updates).
 
 #### 1. Account Management
 
-- Fetch and display a list of accounts for a given client.
-- Account data must be cached for performance.
+- Fetch and display a list of accounts for a given client. [IN PROGRESS]
+- Account data must be cached for performance. [IN PROGRESS]
 
 #### 2. Money Transfer
 
-- Support high-frequency transactions with low latency.
-- Ensure atomicity (transactions succeed or fail completely).
+- Support high-frequency transactions with low latency. [DONE]
+- Ensure atomicity (transactions succeed or fail completely). [DONE]
 - Handle retries in case of temporary failures (network issues, external
-  service unavailability).
+  service unavailability). [DONE]
 
 #### 3. External Service Integration
 
-- Fraud detection service (sync call, must be fast).
-- Notification service (async, eventual consistency).
-- Ledger service (must be eventually consistent).
+- Fraud detection service (sync call, must be fast). [DONE]
+- Notification service (async, eventual consistency). [IN PROGRESS]
+- Ledger service (must be eventually consistent). [IN PROGRESS]
 
 #### 4. Performance & Scalability
 
-- Optimize for high throughput (thousands of transactions per second).
-- Use Kafka for async processing where possible.
-- Implement caching (Redis) to reduce database load.
+- Optimize for high throughput (thousands of transactions per second). [DONE]
+- Use Kafka for async processing where possible. [DONE]
+- Implement caching (Redis) to reduce database load. [IN PROGRESS]
 
 #### 5. Resilience
 
-- Retry policies for transient failures (exponential backoff).
-- Circuit breakers to avoid cascading failures.
-- Idempotency to prevent duplicate transactions.
+- Retry policies for transient failures (exponential backoff). [DONE]
+- Circuit breakers to avoid cascading failures. [IN PROGRESS]
+- Idempotency to prevent duplicate transactions. [DONE]
 
 #### Evaluation Criteria
 
-- Correctness – No double-spending, data consistency.
-- Performance – Handles 1,000+ TPS with low latency.
-- Resilience – Retries, circuit breakers, idempotency.
-- Scalability – Microservices, Kafka, caching.
-- Code Quality – Clean architecture, tests, observability.
+- Correctness – No double-spending, data consistency. [DONE]
+- Performance – Handles 1,000+ TPS with low latency. [DONE]
+- Resilience – Retries, circuit breakers, idempotency. [RETRIES,IDEMPOTENCY]
+- Scalability – Microservices, Kafka, caching. [CACHING IN PROGRESS]
+- Code Quality – Clean architecture, tests, observability. [IN PROGRESS]
 - Bonus Challenges (Optional)
     - How would you handle a partial failure where money is debited but not
-      credited?
-    - How would you scale this globally (multi-region deployments)?
-    - How would you introduce rate limiting to prevent abuse?
+      credited? [SAGA PATTERN]
+    - How would you scale this globally (multi-region deployments)? [KAFKA TOPIC PARTITIONING,SHARDING]
+    - How would you introduce rate limiting to prevent abuse? [IN PROGRESS]
+
+[Miro board](https://miro.com/app/board/uXjVGahmmy0=/?share_link_id=875391363523)
+
+[Only core functionality is implemented.] 

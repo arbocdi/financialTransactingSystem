@@ -18,7 +18,7 @@ public class Message {
     /**
      * prev message id
      */
-    private UUID causationIdId;
+    private UUID causationId;
     /**
      * message id that started the process
      */
@@ -27,7 +27,7 @@ public class Message {
     public void applyPrev(Message msg) {
         setSagaId(msg.getSagaId());
         setRootCausationId(msg.getRootCausationId());
-        setCausationIdId(msg.getMessageId());
+        setCausationId(msg.getMessageId());
     }
 
 }
