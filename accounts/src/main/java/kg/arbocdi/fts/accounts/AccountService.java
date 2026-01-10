@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.function.Consumer;
 
 @Service
-public class AccountService implements CreateAccountPort,AccountCommandPort {
+public class AccountService implements CreateAccountPort, AccountCommandPort {
     private final AccountRepository accountRepository;
     private final EventPublisher eventPublisher;
     private final InboxCommandsService inboxCommandsService;

@@ -1,13 +1,14 @@
 package kg.arbocdi.fts.test.adapters;
 
-import kg.arbocdi.fts.api.transfers.create.CreateTransferCommand;
 import kg.arbocdi.fts.api.transfers.CreateTransferPort;
+import kg.arbocdi.fts.api.transfers.create.CreateTransferCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+
 @Component
 @RequiredArgsConstructor
 public class CreateTransferRestAdapter implements CreateTransferPort {

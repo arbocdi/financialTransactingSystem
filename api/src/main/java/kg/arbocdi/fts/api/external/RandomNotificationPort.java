@@ -6,8 +6,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RandomNotificationPort implements NotificationPort{
+public class RandomNotificationPort implements NotificationPort {
     private final RandomUtils randomUtils;
+
     @Override
     public void notify(AccountEvent event) {
         if (randomUtils.isError(30)) {

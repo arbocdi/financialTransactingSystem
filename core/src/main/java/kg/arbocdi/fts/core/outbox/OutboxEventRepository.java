@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +27,7 @@ public class OutboxEventRepository {
                         .addValue("state", event.getState().name())
         );
     }
+
     public void delete(OutboxEvent event) {
         jdbcTemplate.update("""
                     DELETE FROM outbox_events
@@ -36,6 +35,7 @@ public class OutboxEventRepository {
                 """, new MapSqlParameterSource("event_id", event.getEventId())
         );
     }
+
     public void updateState(OutboxEvent event) {
         jdbcTemplate.update("""
                     update outbox_events

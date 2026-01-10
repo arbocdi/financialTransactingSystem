@@ -1,8 +1,8 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="LocalRun" type="CompoundRunConfigurationType">
-    <toRun name="AccountsApplication" type="SpringBootApplicationConfigurationType" />
-    <toRun name="TestApplication" type="SpringBootApplicationConfigurationType" />
-    <toRun name="TransferApplication" type="SpringBootApplicationConfigurationType" />
-    <method v="2" />
-  </configuration>
+    <configuration default="false" name="LocalRun" type="CompoundRunConfigurationType">
+        <toRun name="AccountsApplication" type="SpringBootApplicationConfigurationType"/>
+        <toRun name="TestApplication" type="SpringBootApplicationConfigurationType"/>
+        <toRun name="TransferApplication" type="SpringBootApplicationConfigurationType"/>
+        <method v="2"/>
+    </configuration>
 </component>

@@ -18,18 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountController {
     private final AccountCommandPort accountCommandPort;
     private final CreateAccountPort createAccountPort;
+
     @PostMapping("")
     public void create(@RequestBody CreateAccountCommand cmd) {
         createAccountPort.create(cmd);
     }
+
     @PostMapping("/withdraw")
     public void withdraw(@RequestBody WithdrawAccountCommand cmd) {
         accountCommandPort.withdraw(cmd);
     }
+
     @PostMapping("/compensateWithdraw")
     public void compensateWithdraw(@RequestBody CompensateWithdrawAccountCommand cmd) {
         accountCommandPort.compensate(cmd);
     }
+
     @PostMapping("/deposit")
     public void deposit(@RequestBody DepositAccountCommand cmd) {
         accountCommandPort.deposit(cmd);

@@ -1,7 +1,6 @@
 package kg.arbocdi.fts.transfers.kafka.accounts;
 
 import kg.arbocdi.fts.api.accounts.AccountEvent;
-import kg.arbocdi.fts.api.transfers.TransferEvent;
 import kg.arbocdi.fts.core.inbox.InboxEventsService;
 import kg.arbocdi.fts.transfers.TransferSagaService;
 import lombok.RequiredArgsConstructor;
@@ -17,11 +16,11 @@ public class KafkaAccountEventListener {
     private final TransferSagaService transferSagaService;
     private final JsonMapper mapper;
 
-    @KafkaListener(topics = "account-events",groupId = "transfer-sagas")
+    @KafkaListener(topics = "account-events", groupId = "transfer-sagas")
     @Transactional
     public void on(String payload) {
         AccountEvent event = mapper.readValue(payload, AccountEvent.class);
-        if(!inboxEventsService.tryInsert(event.getMessageId())) return;
+        if (!inboxEventsService.tryInsert(event.getMessageId())) return;
         transferSagaService.onEvent(event);
     }
 
@@ -29,7 +28,7 @@ public class KafkaAccountEventListener {
     @Transactional
     public void onDlt(String payload) {
         AccountEvent event = mapper.readValue(payload, AccountEvent.class);
-        if(!inboxEventsService.tryInsert(event.getMessageId())) return;
+        if (!inboxEventsService.tryInsert(event.getMessageId())) return;
         transferSagaService.onEvent(event);
     }
 }

@@ -1,7 +1,6 @@
 package kg.arbocdi.fts.api.transfers.create;
 
 import kg.arbocdi.fts.api.transfers.TransferEvent;
-import kg.arbocdi.fts.core.msg.Event;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

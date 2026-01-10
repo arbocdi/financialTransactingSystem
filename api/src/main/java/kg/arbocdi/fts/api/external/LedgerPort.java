@@ -6,6 +6,8 @@ import kg.arbocdi.fts.api.accounts.withdraw.AccountWithdrawnEvent;
 
 public interface LedgerPort {
     void recordWithdrawal(AccountWithdrawnEvent event);
+
     void recordDeposit(AccountWithdrawCompensatedEvent event);
+
     void recordWithdrawCompensation(AccountDepositedEvent event);
 }

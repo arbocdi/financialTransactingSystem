@@ -16,11 +16,11 @@ public class KafkaTransferEventListener {
     private final TransferSagaService transferSagaService;
     private final JsonMapper mapper;
 
-    @KafkaListener(topics = "transfer-events",groupId = "transfer-sagas")
+    @KafkaListener(topics = "transfer-events", groupId = "transfer-sagas")
     @Transactional
     public void on(String payload) {
         TransferEvent event = mapper.readValue(payload, TransferEvent.class);
-        if(!inboxEventsService.tryInsert(event.getMessageId())) return;
+        if (!inboxEventsService.tryInsert(event.getMessageId())) return;
         transferSagaService.onEvent(event);
     }
 
@@ -28,7 +28,7 @@ public class KafkaTransferEventListener {
     @Transactional
     public void onDlt(String payload) {
         TransferEvent event = mapper.readValue(payload, TransferEvent.class);
-        if(!inboxEventsService.tryInsert(event.getMessageId())) return;
+        if (!inboxEventsService.tryInsert(event.getMessageId())) return;
         transferSagaService.onEvent(event);
     }
 }

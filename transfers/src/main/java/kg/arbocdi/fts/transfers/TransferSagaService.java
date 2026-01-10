@@ -35,6 +35,7 @@ public class TransferSagaService implements CreateTransferPort {
         saga.on(cmd);
         repository.save(saga);
     }
+
     @Transactional
     public void onEvent(TransferEvent event) {
         Optional<TransferSaga> sagaOpt = readSaga(event.getSagaId());
@@ -43,6 +44,7 @@ public class TransferSagaService implements CreateTransferPort {
         saga.onEvent(event);
         repository.save(saga);
     }
+
     @Transactional
     public void onEvent(AccountEvent event) {
         Optional<TransferSaga> sagaOpt = readSaga(event.getSagaId());
@@ -51,8 +53,9 @@ public class TransferSagaService implements CreateTransferPort {
         saga.onEvent(event);
         repository.save(saga);
     }
-    private Optional<TransferSaga> readSaga(UUID id){
-        if(id==null) return Optional.empty();
+
+    private Optional<TransferSaga> readSaga(UUID id) {
+        if (id == null) return Optional.empty();
         Optional<TransferSaga> sagaOpt = repository.findActiveForUpdate(id);
         sagaOpt.ifPresent(saga -> saga.setEventPublisher(eventPublisher));
         sagaOpt.ifPresent(saga -> saga.setAccountCommandPort(accountCommandPort));

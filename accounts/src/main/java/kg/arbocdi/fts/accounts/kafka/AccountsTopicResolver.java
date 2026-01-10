@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class AccountsTopicResolver implements TopicResolver {
     @Override
     public String getTopic(Message message) {
-        if(message instanceof AccountEvent){
+        if (message instanceof AccountEvent) {
             return "account-events";
         }
         throw new IllegalArgumentException("Unknown message type");

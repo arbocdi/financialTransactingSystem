@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TransfersController {
     private final CreateTransferPort createTransferPort;
+
     @PostMapping("")
     public void createTransfer(@RequestBody CreateTransferCommand cmd) {
         createTransferPort.create(cmd);

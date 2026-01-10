@@ -1,6 +1,5 @@
 package kg.arbocdi.fts.accounts;
 
-import kg.arbocdi.fts.api.external.ExternalPortsMarker;
 import kg.arbocdi.fts.core.cfg.ConfigMarker;
 import kg.arbocdi.fts.core.inbox.InboxMarker;
 import kg.arbocdi.fts.core.outbox.OutboxMarker;

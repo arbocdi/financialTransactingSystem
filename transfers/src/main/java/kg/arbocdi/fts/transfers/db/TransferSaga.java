@@ -80,7 +80,7 @@ public class TransferSaga {
         this.depositCmd = depositCmd;
 
         state = State.WITHDRAW_PENDING;
-        eventPublisher.publish(new TransferCreatedEvent(cmd),cmd);
+        eventPublisher.publish(new TransferCreatedEvent(cmd), cmd);
     }
 
 
@@ -159,13 +159,15 @@ public class TransferSaga {
 
     }
 
-    public WithdrawAccountCommand getWithdrawCmd(){
+    public WithdrawAccountCommand getWithdrawCmd() {
         return (WithdrawAccountCommand) this.withdrawCmd;
     }
-    public DepositAccountCommand getDepositCmd(){
+
+    public DepositAccountCommand getDepositCmd() {
         return (DepositAccountCommand) this.depositCmd;
     }
-    public CompensateWithdrawAccountCommand getCompensateCmd(){
+
+    public CompensateWithdrawAccountCommand getCompensateCmd() {
         return (CompensateWithdrawAccountCommand) this.compensateCmd;
     }
 }

@@ -1,7 +1,6 @@
 package kg.arbocdi.fts.api.accounts;
 
 import kg.arbocdi.fts.api.accounts.compensateWithrdaw.CompensateWithdrawAccountCommand;
-import kg.arbocdi.fts.api.accounts.create.CreateAccountCommand;
 import kg.arbocdi.fts.api.accounts.deposit.DepositAccountCommand;
 import kg.arbocdi.fts.api.accounts.withdraw.WithdrawAccountCommand;
 

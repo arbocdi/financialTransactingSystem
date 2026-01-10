@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class RandomLedgerPort implements LedgerPort{
+public class RandomLedgerPort implements LedgerPort {
     private final RandomUtils randomUtils;
+
     @Override
     public void recordWithdrawal(AccountWithdrawnEvent event) {
         randomError();

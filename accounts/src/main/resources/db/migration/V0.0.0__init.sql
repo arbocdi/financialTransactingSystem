@@ -14,9 +14,9 @@ create table inbox_commands
 --outbox
 create table outbox_events
 (
-    event_id  uuid      not null primary key,
-    payload   jsonb      not null,
-    state     text      not null,
+    event_id   uuid      not null primary key,
+    payload    jsonb     not null,
+    state      text      not null,
     seq_number bigserial not null
 );
-create index outbox_events_idx on outbox_events (state,seq_number);
+create index outbox_events_idx on outbox_events (state, seq_number);

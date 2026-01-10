@@ -27,8 +27,8 @@ public class RestErrorResponse {
         BUSINESS, OTHER;
     }
 
-    public RuntimeException convertToException(){
-        if(type == Type.BUSINESS) return new BusinessException(message,code);
+    public RuntimeException convertToException() {
+        if (type == Type.BUSINESS) return new BusinessException(message, code);
         else return new RuntimeException(message);
     }
 

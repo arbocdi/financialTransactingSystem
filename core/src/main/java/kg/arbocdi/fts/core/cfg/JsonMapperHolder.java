@@ -1,6 +1,5 @@
 package kg.arbocdi.fts.core.cfg;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.json.JsonMapper;
 

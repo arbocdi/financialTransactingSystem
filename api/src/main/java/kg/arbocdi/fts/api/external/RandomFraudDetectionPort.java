@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class RandomFraudDetectionPort implements FraudDetectionPort {
     private final RandomUtils randomUtils;
+
     @Override
     public void check(CreateTransferCommand cmd) {
         if (randomUtils.isError(20)) {
-           // throw new FraudDetectedException();
+            // throw new FraudDetectedException();
         }
     }
 }

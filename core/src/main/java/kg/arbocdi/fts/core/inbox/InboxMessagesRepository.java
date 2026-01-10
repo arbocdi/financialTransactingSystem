@@ -12,7 +12,7 @@ public class InboxMessagesRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public boolean tryInsert(String table,UUID messageId) {
+    public boolean tryInsert(String table, UUID messageId) {
         int inserted = jdbcTemplate.update("""
                     INSERT INTO %s(message_id)
                     VALUES (?)

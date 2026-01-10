@@ -9,6 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class InboxCommandsService {
     private final InboxMessagesRepository repository;
+
     public boolean tryInsert(UUID commandId) {
         return repository.tryInsert("inbox_commands", commandId);
     }

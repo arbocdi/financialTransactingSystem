@@ -11,7 +11,7 @@ public class RestClientConfig {
     public RestClient restClient(JsonMapper mapper) {
         RestErrorHandler errorHandler = new RestErrorHandler(mapper);
         return RestClient.builder()
-                .defaultStatusHandler(errorHandler,errorHandler)
+                .defaultStatusHandler(errorHandler, errorHandler)
                 .build();
     }
 }
