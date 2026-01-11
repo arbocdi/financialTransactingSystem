@@ -1,62 +1,53 @@
 package kg.arbocdi.fts.core.outbox_kafka;
 
-import kg.arbocdi.fts.core.msg.Message;
 import kg.arbocdi.fts.core.outbox.OutboxEvent;
 import kg.arbocdi.fts.core.outbox.OutboxEventRepository;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Map;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class OutboxKafkaEventPublisher {
-    private final KafkaTemplate<String, String> kafkaTemplate;
-    private final OutboxEventRepository repository;
-    private final TopicResolver topicResolver;
-    private final KeyExtractor keyExtractor;
-    private final ObjectMapper objectMapper;
 
+    private final OutboxKafkaConfig.KafkaTemplates kafkaTemplates;
+    private final OutboxEventRepository repository;
+    private final OutboxWorker outboxWorker;
+    @Value("${partitions.number}")
+    private int partitionsNumber;
     private static final int BATCH_SIZE = 50;
 
-    @Scheduled(fixedDelay = 50)
+
+    @Scheduled(fixedDelay = 200)
     public void publish() {
-        // 1) Берём пачку под отправку (лучше: с локацией/lease, чтобы несколько инстансов не дублировали)
-        List<OutboxEvent> events = repository.findForSend(BATCH_SIZE);
-        if (events.isEmpty()) return;
-
-        // 2) Отправляем пачку в одной Kafka-транзакции
-        kafkaTemplate.executeInTransaction(kt -> {
-            for (OutboxEvent e : events) {
-                Message msg = e.getPayloadAsMessage(objectMapper);
-
-                String topic = topicResolver.getTopic(msg);
-                String key = keyExtractor.getKey(msg);
-
-                kt.send(topic, key, e.getPayload()); // e.getPayload() = String/JSON
+        List<Future<Void>> futures = new LinkedList<>();
+        Map<Integer, List<OutboxEvent>> events = repository.findForSend(BATCH_SIZE * partitionsNumber).stream()
+                .collect(Collectors.groupingBy(e -> Math.floorMod(e.getKey().hashCode(), partitionsNumber)));
+        for (int s = 0; s < partitionsNumber; s++) {
+            List<OutboxEvent> shard = events.getOrDefault(s, List.of());
+            KafkaTemplate<String, String> kafkaTemplate = kafkaTemplates.get(s);
+            if (!shard.isEmpty()) {
+                shard = shard.subList(0, Math.min(BATCH_SIZE, shard.size()));
+                futures.add(outboxWorker.runOnce(shard, kafkaTemplate));
             }
-            return true;
-        });
-
-        // 3) Если дошли сюда — commitTransaction() прошёл успешно
-        //    Значит можно пометить события как отправленные.
-        repository.markSent(events);
-    }
-
-    @Data
-    @AllArgsConstructor
-    private static class KafkaResult {
-        private CompletableFuture<SendResult<String, String>> future;
-        private OutboxEvent event;
+        }
+        for (Future<Void> f : futures) {
+            try {
+                f.get();
+            } catch (Exception e) {
+                log.warn("Kafka publication failed", e);
+            }
+        }
     }
 }

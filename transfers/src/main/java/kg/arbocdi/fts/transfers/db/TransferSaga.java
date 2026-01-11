@@ -129,6 +129,7 @@ public class TransferSaga {
     private void depositCompleted(AccountDepositedEvent event) {
         if (state != State.DEPOSIT_PENDING) return;
         setState(State.DEPOSIT_COMPLETED);
+
     }
 
     private void compensate() {
@@ -157,6 +158,10 @@ public class TransferSaga {
             this.terminalState = terminalState;
         }
 
+    }
+
+    public boolean shouldBeDeleted() {
+        return state == State.DEPOSIT_COMPLETED || state == State.COMPENSATED;
     }
 
     public WithdrawAccountCommand getWithdrawCmd() {

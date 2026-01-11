@@ -51,7 +51,8 @@ public class TransferSagaService implements CreateTransferPort {
         if (sagaOpt.isEmpty()) return;
         TransferSaga saga = sagaOpt.get();
         saga.onEvent(event);
-        repository.save(saga);
+        if (saga.shouldBeDeleted()) repository.delete(saga);
+        else repository.save(saga);
     }
 
     private Optional<TransferSaga> readSaga(UUID id) {

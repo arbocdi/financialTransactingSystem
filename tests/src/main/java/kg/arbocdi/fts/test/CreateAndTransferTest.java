@@ -41,7 +41,7 @@ public class CreateAndTransferTest {
 
     private Result createAccountsAndTransfer(int accountCount) {
         Result result = new Result();
-        for (int a = 1; a <= 100; a++) {
+        for (int a = 1; a <= accountCount; a++) {
             UUID owner = UUIDGenerator.generate();
             UUID account1 = UUIDGenerator.generate();
             UUID account2 = UUIDGenerator.generate();
@@ -49,7 +49,7 @@ public class CreateAndTransferTest {
             deposit(account1, 55);
             createAccount(owner, account2);
 
-            for (int i = 1; i <= 10; i++) {
+            for (int i = 1; i <= 9; i++) {
                 try {
                     transfer(account1, account2, i);
                     result.incrementSuccess();

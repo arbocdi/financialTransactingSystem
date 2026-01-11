@@ -8,7 +8,7 @@ import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
 public class AccountEventsTopicConfig {
-    @Value("${partinions.number}")
+    @Value("${partitions.number}")
     private int partitions;
 
     @Bean
