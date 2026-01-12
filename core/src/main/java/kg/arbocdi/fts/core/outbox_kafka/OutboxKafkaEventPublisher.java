@@ -26,7 +26,7 @@ public class OutboxKafkaEventPublisher {
     private final OutboxWorker outboxWorker;
     @Value("${partitions.number}")
     private int partitionsNumber;
-    private static final int BATCH_SIZE = 50;
+    private static final int BATCH_SIZE = 200;
 
 
     @Scheduled(fixedDelay = 200)

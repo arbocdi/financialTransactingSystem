@@ -46,8 +46,10 @@ public class CreateAndTransferTest {
             UUID account1 = UUIDGenerator.generate();
             UUID account2 = UUIDGenerator.generate();
             createAccount(owner, account1);
+            result.incrementCreatedAccounts();
             deposit(account1, 55);
             createAccount(owner, account2);
+            result.incrementCreatedAccounts();
 
             for (int i = 1; i <= 9; i++) {
                 try {
@@ -89,6 +91,7 @@ public class CreateAndTransferTest {
     public static class Result {
         private int successCount;
         private int failCount;
+        private int createdAccounts;
 
         public void incrementSuccess() {
             successCount++;
@@ -98,9 +101,14 @@ public class CreateAndTransferTest {
             failCount++;
         }
 
+        public void incrementCreatedAccounts() {
+            createdAccounts++;
+        }
+
         public synchronized void merge(Result other) {
             this.successCount += other.successCount;
             this.failCount += other.failCount;
+            this.createdAccounts += other.createdAccounts;
         }
     }
 }
