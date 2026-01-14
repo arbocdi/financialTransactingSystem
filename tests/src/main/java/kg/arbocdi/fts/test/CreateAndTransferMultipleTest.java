@@ -1,11 +1,5 @@
 package kg.arbocdi.fts.test;
 
-import kg.arbocdi.fts.api.accounts.AccountCommandPort;
-import kg.arbocdi.fts.api.accounts.CreateAccountPort;
-import kg.arbocdi.fts.api.accounts.create.CreateAccountCommand;
-import kg.arbocdi.fts.api.accounts.deposit.DepositAccountCommand;
-import kg.arbocdi.fts.api.transfers.CreateTransferPort;
-import kg.arbocdi.fts.api.transfers.create.CreateTransferCommand;
 import kg.arbocdi.fts.core.exception.BusinessException;
 import kg.arbocdi.fts.core.util.UUIDGenerator;
 import lombok.Data;
@@ -20,10 +14,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CreateAndTransferTest {
-    private final CreateAccountPort createAccountPort;
-    private final AccountCommandPort accountCommandPort;
-    private final CreateTransferPort createTransferPort;
+public class CreateAndTransferMultipleTest {
+    private final ApiHelper apiHelper;
 
     public Result createAccountsAndTransfer(int threads, int accountCount) throws InterruptedException {
         Result result = new Result();
@@ -45,15 +37,15 @@ public class CreateAndTransferTest {
             UUID owner = UUIDGenerator.generate();
             UUID account1 = UUIDGenerator.generate();
             UUID account2 = UUIDGenerator.generate();
-            createAccount(owner, account1);
+            apiHelper.createAccount(owner, account1);
             result.incrementCreatedAccounts();
-            deposit(account1, 55);
-            createAccount(owner, account2);
+            apiHelper.deposit(account1, 55);
+            apiHelper.createAccount(owner, account2);
             result.incrementCreatedAccounts();
 
             for (int i = 1; i <= 9; i++) {
                 try {
-                    transfer(account1, account2, i);
+                    apiHelper.transfer(account1, account2, i);
                     result.incrementSuccess();
                 } catch (BusinessException e) {
                     log.warn("Transfer failed", e);
@@ -62,29 +54,6 @@ public class CreateAndTransferTest {
             }
         }
         return result;
-    }
-
-    private void createAccount(UUID ownerId, UUID accountId) {
-        CreateAccountCommand cmd = new CreateAccountCommand();
-        cmd.setAggregateId(accountId);
-        cmd.setOwnerId(ownerId);
-        createAccountPort.create(cmd);
-    }
-
-    private void deposit(UUID accountId, int amount) {
-        DepositAccountCommand cmd = new DepositAccountCommand();
-        cmd.setAggregateId(accountId);
-        cmd.setAmount(amount);
-        accountCommandPort.deposit(cmd);
-    }
-
-    private void transfer(UUID from, UUID to, int amount) {
-        CreateTransferCommand cmd = new CreateTransferCommand();
-        cmd.setSagaId(UUIDGenerator.generate());
-        cmd.setSourceAccountId(from);
-        cmd.setTargetAccountId(to);
-        cmd.setAmount(amount);
-        createTransferPort.create(cmd);
     }
 
     @Data

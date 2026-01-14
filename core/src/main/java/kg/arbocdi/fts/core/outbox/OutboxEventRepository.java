@@ -18,20 +18,21 @@ public class OutboxEventRepository {
     public void save(OutboxEvent event) {
         jdbcTemplate.update(
                 """
-                            INSERT INTO outbox_events (event_id,key,topic, payload)
-                            VALUES (:event_id,:key,:topic,CAST(:payload AS jsonb))
+                            INSERT INTO outbox_events (event_id,key,topic, payload,headers)
+                            VALUES (:event_id,:key,:topic,CAST(:payload AS jsonb),:headers)
                         """,
                 new MapSqlParameterSource()
                         .addValue("event_id", event.getEventId(), Types.OTHER)
                         .addValue("key", event.getKey())
                         .addValue("topic", event.getTopic())
                         .addValue("payload", event.getPayload())
+                        .addValue("headers", event.getHeaders())
         );
     }
 
     public List<OutboxEvent> findForSend(int limit) {
         return jdbcTemplate.query("""
-                            SELECT event_id,key,topic, payload, seq_number
+                            SELECT event_id,key,topic, payload,headers, seq_number
                             FROM outbox_events
                             ORDER BY seq_number
                             LIMIT :limit
@@ -56,6 +57,7 @@ public class OutboxEventRepository {
             rs.getString("key"),
             rs.getString("topic"),
             rs.getString("payload"),
+            rs.getString("headers"),
             rs.getLong("seq_number")
     );
 }

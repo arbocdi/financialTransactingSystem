@@ -6,8 +6,10 @@ import kg.arbocdi.fts.core.outbox_kafka.TopicResolver;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.Map;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class OutboxEvent {
     private String key;
     private String topic;
     private String payload;
+    private String headers;
     private long seqNumber;
 
     public OutboxEvent(Message event, ObjectMapper om, KeyExtractor keyExtractor, TopicResolver topicResolver) {
@@ -25,6 +28,15 @@ public class OutboxEvent {
         key = keyExtractor.getKey(event);
         topic = topicResolver.getTopic(event);
         payload = om.writerWithDefaultPrettyPrinter().writeValueAsString(event);
+    }
+
+    public void setHeadersMap(Map<String, String> headers, ObjectMapper om) {
+        this.headers = om.writerWithDefaultPrettyPrinter().writeValueAsString(headers);
+    }
+
+    public Map<String, String> getHeadersMap(ObjectMapper om) {
+        return om.readValue(headers, new TypeReference<Map<String, String>>() {
+        });
     }
 
     public Message getPayloadAsMessage(ObjectMapper om) {

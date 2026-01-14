@@ -1,6 +1,7 @@
 package kg.arbocdi.fts.test.api;
 
-import kg.arbocdi.fts.test.CreateAndTransferTest;
+import kg.arbocdi.fts.test.CreateAndTransferMultipleTest;
+import kg.arbocdi.fts.test.CreateAndTransferSingleTest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/test")
 @RequiredArgsConstructor
 public class TestController {
-    private final CreateAndTransferTest createAndTransferTest;
+    private final CreateAndTransferMultipleTest createAndTransferMultipleTest;
+    private final CreateAndTransferSingleTest createAndTransferSingleTest;
 
-    @PostMapping("/create-and-transfer")
-    public CreateAndTransferTest.Result createAndTransfer(
+    @PostMapping("/create-and-transfer-multiple")
+    public CreateAndTransferMultipleTest.Result createAndTransferMultiple(
             @RequestParam("threads") int threads,
             @RequestParam("accounts") int accounts
     ) throws InterruptedException {
-        return createAndTransferTest.createAccountsAndTransfer(threads, accounts);
+        return createAndTransferMultipleTest.createAccountsAndTransfer(threads, accounts);
+    }
+
+    @PostMapping("/create-and-transfer-single")
+    public CreateAndTransferSingleTest.Result createAndTransferSingle(
+    ) throws InterruptedException {
+        return createAndTransferSingleTest.createAccountsAndTransfer();
     }
 }

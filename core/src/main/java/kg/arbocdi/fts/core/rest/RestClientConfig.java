@@ -8,9 +8,9 @@ import tools.jackson.databind.json.JsonMapper;
 @Configuration
 public class RestClientConfig {
     @Bean
-    public RestClient restClient(JsonMapper mapper) {
+    public RestClient restClient(RestClient.Builder builder, JsonMapper mapper) {
         RestErrorHandler errorHandler = new RestErrorHandler(mapper);
-        return RestClient.builder()
+        return builder
                 .defaultStatusHandler(errorHandler, errorHandler)
                 .build();
     }
