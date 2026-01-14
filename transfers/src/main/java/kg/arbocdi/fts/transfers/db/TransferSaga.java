@@ -22,6 +22,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -29,6 +31,16 @@ import java.util.UUID;
 @Table(name = "transfer_sagas")
 @NoArgsConstructor
 public class TransferSaga {
+
+    private static final Set<Class<? extends AccountEvent>> events;
+
+    static {
+        events = new HashSet<>();
+        events.add(AccountDepositedEvent.class);
+        events.add(AccountWithdrawnEvent.class);
+        events.add(AccountWithdrawCompensatedEvent.class);
+    }
+
     @Id
     private UUID id;
     private UUID sourceAccountId;
@@ -174,5 +186,9 @@ public class TransferSaga {
 
     public CompensateWithdrawAccountCommand getCompensateCmd() {
         return (CompensateWithdrawAccountCommand) this.compensateCmd;
+    }
+
+    public static Set<Class<? extends AccountEvent>> getInterestedInEvents() {
+        return events;
     }
 }

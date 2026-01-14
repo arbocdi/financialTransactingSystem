@@ -47,6 +47,7 @@ public class TransferSagaService implements CreateTransferPort {
 
     @Transactional
     public void onEvent(AccountEvent event) {
+        if (!TransferSaga.getInterestedInEvents().contains(event.getClass())) return;
         Optional<TransferSaga> sagaOpt = readSaga(event.getSagaId());
         if (sagaOpt.isEmpty()) return;
         TransferSaga saga = sagaOpt.get();
