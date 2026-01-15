@@ -1,4 +1,4 @@
-package kg.arbocdi.fts.test;
+package kg.arbocdi.fts.test.helpers;
 
 import kg.arbocdi.fts.api.accounts.AccountCommandPort;
 import kg.arbocdi.fts.api.accounts.CreateAccountPort;

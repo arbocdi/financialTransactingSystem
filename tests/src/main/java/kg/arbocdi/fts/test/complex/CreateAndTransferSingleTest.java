@@ -1,14 +1,15 @@
-package kg.arbocdi.fts.test;
+package kg.arbocdi.fts.test.complex;
 
 import kg.arbocdi.fts.core.util.UUIDGenerator;
+import kg.arbocdi.fts.test.helpers.ApiHelper;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class CreateAndTransferSingleTest {
