@@ -1,13 +1,13 @@
-package kg.arbocdi.fts.core.outbox_kafka;
+package kg.arbocdi.fts.core.outbox_kafka.partitioned;
 
 import kg.arbocdi.fts.core.outbox.OutboxEvent;
 import kg.arbocdi.fts.core.outbox.OutboxEventRepository;
+import kg.arbocdi.fts.core.outbox_kafka.OutboxKafkaConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,10 +16,10 @@ import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 
-@Component
+//@Component
 @Slf4j
 @RequiredArgsConstructor
-public class OutboxKafkaEventPublisher {
+public class PartitionedOutboxKafkaEventPublisher {
 
     private final OutboxKafkaConfig.KafkaTemplates kafkaTemplates;
     private final OutboxEventRepository repository;
