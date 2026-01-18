@@ -25,4 +25,3 @@ create table accounts
     owner_id uuid    not null,
     balance  integer not null
 );
-create index accounts_owner_id_idx on accounts (owner_id);

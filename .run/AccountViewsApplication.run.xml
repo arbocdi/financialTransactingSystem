@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="AccountViewsApplication" type="SpringBootApplicationConfigurationType"
+                   factoryName="Spring Boot" nameIsGenerated="true">
+        <option name="ACTIVE_PROFILES" value="local"/>
+        <module name="fts.account-views.main"/>
+        <option name="SPRING_BOOT_MAIN_CLASS" value="kg.arbocdi.fts.accountViews.AccountViewsApplication"/>
+        <method v="2">
+            <option name="Make" enabled="true"/>
+        </method>
+    </configuration>
+</component>

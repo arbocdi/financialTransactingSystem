@@ -2,7 +2,6 @@ package kg.arbocdi.fts.transfers.kafka.accounts;
 
 import kg.arbocdi.fts.api.accounts.AccountEvent;
 import kg.arbocdi.fts.core.inbox.InboxEventsService;
-import kg.arbocdi.fts.core.outbox.TraceContextSnapshotter;
 import kg.arbocdi.fts.transfers.TransferSagaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -16,8 +15,6 @@ public class KafkaAccountEventListener {
     private final InboxEventsService inboxEventsService;
     private final TransferSagaService transferSagaService;
     private final JsonMapper mapper;
-    private final TraceContextSnapshotter traceContextSnapshotter;
-    ;
 
     @KafkaListener(topics = "account-events", groupId = "transfer-sagas")
     @Transactional

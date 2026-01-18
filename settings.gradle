@@ -1,2 +1,2 @@
 rootProject.name = 'fts'
-include 'core', 'api', 'accounts', 'transfers', 'tests'
+include 'core', 'api', 'accounts', 'transfers', 'tests', 'account-views'

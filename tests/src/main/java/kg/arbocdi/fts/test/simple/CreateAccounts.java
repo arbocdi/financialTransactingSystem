@@ -28,13 +28,13 @@ public class CreateAccounts {
 
     private Result createAccounts(int accountCount) {
         Result result = new Result();
+        UUID owner = UUIDGenerator.generate();
         for (int a = 0; a < accountCount; a++) {
-            UUID owner = UUIDGenerator.generate();
-            UUID account1 = UUIDGenerator.generate();
+            UUID account = UUIDGenerator.generate();
             try {
-                apiHelper.createAccount(owner, account1);
+                apiHelper.createAccount(owner, account);
                 result.incrementSuccess();
-                result.addCreatedAccount(account1);
+                result.addCreatedAccount(account);
             } catch (Exception e) {
                 result.incrementFail();
             }
