@@ -17,12 +17,12 @@ import java.util.UUID;
 public class AccountsController {
     private final AccountsRedisRepo repo;
 
-    @GetMapping("/{ownerId}")
+    @GetMapping("/owner/{ownerId}")
     public List<Account> getAccounts(@PathVariable UUID ownerId) {
         return repo.getAccounts(ownerId);
     }
 
-    @GetMapping("/{ownerId}/{accountId}")
+    @GetMapping("/owner/{ownerId}/account/{accountId}")
     public Account getAccount(@PathVariable UUID ownerId, @PathVariable UUID accountId) {
         return repo.getAccount(ownerId, accountId);
     }
