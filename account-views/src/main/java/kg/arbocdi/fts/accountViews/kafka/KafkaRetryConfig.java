@@ -9,7 +9,7 @@ import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.support.ExponentialBackOffWithMaxRetries;
 
 @Configuration
-public class RetryTemplateConfig {
+public class KafkaRetryConfig {
 
     @Bean
     public ContainerCustomizer<String, String, ConcurrentMessageListenerContainer<String, String>> containerCustomizer(DefaultErrorHandler errorHandler) {
@@ -39,6 +39,7 @@ public class RetryTemplateConfig {
                 };
 
         var eh = new DefaultErrorHandler(rethrowRecoverer, backoff);
+
 
         // опционально: какие исключения ретраим/не ретраим
         eh.addRetryableExceptions(Exception.class);
