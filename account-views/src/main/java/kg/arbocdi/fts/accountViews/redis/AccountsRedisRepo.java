@@ -85,7 +85,8 @@ public class AccountsRedisRepo {
     }
 
     private String ownerTag(UUID ownerId) {
-        // hash-tag для Redis Cluster (всё owner-специфичное в одном слоте)
+        //hash-tag для Redis Cluster (всё owner-специфичное на одной ноде)
+        //node = hash({...})%N
         return "owner:{" + ownerId + "}";
     }
 
